@@ -1,0 +1,31 @@
+{
+  "name": "reactcv",
+  "version": "1.0.0",
+  "description": "React CV BUILDER",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest",
+    "start": "npx parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iacoberik/reactCV.git"
+  },
+  "author": "Iacob Erik-Andrei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iacoberik/reactCV/issues"
+  },
+  "homepage": "https://github.com/iacoberik/reactCV#readme",
+  "devDependencies": {
+    "parcel": "^2.11.0",
+    "postcss": "^8.4.35",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind": "^4.0.0"
+  }
+}
