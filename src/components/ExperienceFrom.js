@@ -71,10 +71,10 @@ const ExperienceForm = ({
         onChange={(e) => handleInputChange("description", e.target.value)}
         id="job-description"
         name="about-input"
-        placeholder="My name is Alex Drysdale and I am a junior web developer for Oswald Technologies. I am an accomplished coder and..."
+        placeholder="Work standard: (insert what aspect of the responsibility will be reviewed to determine if the job is being done correctly, for example, time frame, or number of completed tasks per week)"
       ></textarea>
       {/* Button to remove the experience form */}
-      <button onClick={onRemove} className="primary-btn">
+      <button onClick={onRemove} className="primary-btn remove">
         Remove Experience
       </button>
     </div>

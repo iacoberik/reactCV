@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ExperienceForm from "./ExperienceFrom";
+import CvContext from "../utils/CvContext";
 
 const CvCreator = () => {
   // Define state variables to manage the list of experience forms and the length of the list
-  const [experienceForms, setExperienceForms] = useState([]);
   const [expLength, setExpLength] = useState(0);
-  console.log(experienceForms);
+  const [experienceForms, setExperienceForms] = useState([]);
+  const [aboutForms, setAboutForms] = useState(["test"]);
+  const [educationForms, setEducationForms] = useState(["test educatie"]);
+  const { setCvExperience, setCvAbout, setCvEducation } = useContext(CvContext);
 
   // Function to add a new experience form to the list
   const addExperience = () => {
@@ -23,6 +26,7 @@ const CvCreator = () => {
     ];
     // Update the list of experience forms and increment the length counter
     setExperienceForms(newExperienceForms);
+    setCvExperience(experienceForms);
     setExpLength(expLength + 1);
   };
 
@@ -43,7 +47,18 @@ const CvCreator = () => {
     // Update the value of the specified field in the specified experience form
     newExperienceForms[index][field] = value;
     // Update the list of experience forms
+    if (
+      newExperienceForms[index].startDate >= newExperienceForms[index].endDate
+    ) {
+      newExperienceForms[index].endDate = "";
+    }
     setExperienceForms(newExperienceForms);
+  };
+
+  const handleExperienceSubmit = () => {
+    setCvExperience(experienceForms);
+    setCvAbout(aboutForms);
+    setCvEducation(educationForms);
   };
 
   return (
@@ -108,11 +123,28 @@ const CvCreator = () => {
         {/* Education form */}
         <div className="education-form">
           <h3>Your Education</h3>
-          <label></label>
+          <label htmlFor="qualification" className="info-form">
+            Title of qualification awarded*
+          </label>
+          <input
+            id="qualification"
+            type="text"
+            placeholder="Title of qualification awarded"
+          ></input>
+          <label htmlFor="Organisation" className="info-form">
+            Organisation providing education and training*
+          </label>
+          <input
+            id="Organisation"
+            type="text"
+            placeholder="Organisation"
+          ></input>
         </div>
       </div>
       {/* Button to submit the CV */}
-      <button className="primary-btn submit">Submit CV</button>
+      <button className="primary-btn submit" onClick={handleExperienceSubmit}>
+        Submit CV
+      </button>
     </section>
   );
 };
