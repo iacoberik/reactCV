@@ -9,10 +9,14 @@ const CvCreator = () => {
   const addExperience = () => {
     const newExperienceForms = [
       ...experienceForms,
-      <ExperienceForm
-        key={expLength}
-        onRemove={() => removeExperienceForm(expLength)}
-      />,
+      {
+        key: expLength,
+        company: "",
+        startDate: "",
+        endDate: "",
+        post: "",
+        description: "",
+      },
     ];
     setExperienceForms(newExperienceForms);
     setExpLength(expLength + 1);
@@ -22,6 +26,12 @@ const CvCreator = () => {
     const newExperienceForms = experienceForms.filter(
       (item) => item.key !== indexToRemove
     );
+    setExperienceForms(newExperienceForms);
+  };
+
+  const handleExperienceChange = (index, field, value) => {
+    const newExperienceForms = [...experienceForms];
+    newExperienceForms[index][field] = value;
     setExperienceForms(newExperienceForms);
   };
 
@@ -57,20 +67,24 @@ const CvCreator = () => {
           ></textarea>
         </div>
         <div className="experince-form">
-          <h3>Your Experince</h3>
-          {experienceForms.map((form) => (
+          <h3>Your Experience</h3>
+          {experienceForms.map((form, index) => (
             <div key={form.key}>
-              {form}
-              <button
-                className="primary-btn"
-                onClick={() => removeExperienceForm(form.key)}
-              >
-                Remove Experience
-              </button>
+              <ExperienceForm
+                company={form.company}
+                startDate={form.startDate}
+                endDate={form.endDate}
+                post={form.post}
+                description={form.description}
+                onRemove={() => removeExperienceForm(form.key)}
+                onChange={(field, value) =>
+                  handleExperienceChange(index, field, value)
+                }
+              />
             </div>
           ))}
           <button className="primary-btn" onClick={addExperience}>
-            Add Experince
+            Add Experience
           </button>
           <label></label>
         </div>
