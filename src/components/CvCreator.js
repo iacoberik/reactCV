@@ -6,8 +6,8 @@ const CvCreator = () => {
   // Define state variables to manage the list of experience forms and the length of the list
   const [expLength, setExpLength] = useState(0);
   const [experienceForms, setExperienceForms] = useState([]);
-  const [aboutForms, setAboutForms] = useState(["test"]);
-  const [educationForms, setEducationForms] = useState(["test educatie"]);
+  const [aboutForms, setAboutForms] = useState([]);
+  const [educationForms, setEducationForms] = useState([]);
   const { setCvExperience, setCvAbout, setCvEducation } = useContext(CvContext);
 
   // Function to add a new experience form to the list
@@ -56,9 +56,34 @@ const CvCreator = () => {
   };
 
   const handleExperienceSubmit = () => {
-    setCvExperience(experienceForms);
-    setCvAbout(aboutForms);
-    setCvEducation(educationForms);
+    // Check if all fields are filled
+    const isFormValid = experienceForms.every(
+      (form) =>
+        form.company !== "" &&
+        form.startDate !== "" &&
+        form.endDate !== "" &&
+        form.post !== "" &&
+        form.description !== ""
+    );
+
+    if (!isFormValid) {
+      // If the form is not valid, find which fields are empty
+      const emptyFields = experienceForms.map((form, index) => {
+        const emptyFieldsInForm = Object.keys(form).filter(
+          (key) => form[key] === ""
+        );
+        return { index, emptyFieldsInForm };
+      });
+
+      // Log or display the empty fields for debugging or user feedback
+      console.log("Empty fields:", emptyFields);
+      // You can also set state or display a message to the user about the empty fields
+    } else {
+      // If the form is valid, proceed with submitting the CV
+      setCvExperience(experienceForms);
+      setCvAbout(aboutForms);
+      setCvEducation(educationForms);
+    }
   };
 
   return (
