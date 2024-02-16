@@ -5,9 +5,17 @@ export default function AboutForm({
   description,
   onChange,
   formSubmitted,
+  emailValidation,
 }) {
   // Handle input changes and propagate them to the parent component
   const handleInputChange = (field, value) => {
+    // if (field === "email") {
+    //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; /
+    //   if (!emailRegex.test(value)) {
+    //     return;
+    //   }
+    // }
+    console.log(emailValidation);
     // Call the onChange function passed from the parent with the field name and new value
     onChange(field, value);
   };
@@ -41,7 +49,7 @@ export default function AboutForm({
         id="email"
         type="text"
         value={email}
-        className={formSubmitted && !email ? "error" : ""}
+        className={formSubmitted && !emailValidation ? "error" : ""}
         onChange={(e) => handleInputChange("email", e.target.value)}
         placeholder="alexdrysdale@gmail.com"
       ></input>
