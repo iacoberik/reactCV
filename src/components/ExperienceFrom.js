@@ -2,6 +2,7 @@ import React from "react";
 
 const ExperienceForm = ({
   // Destruct props
+  formSubmitted,
   company,
   startDate,
   endDate,
@@ -27,6 +28,7 @@ const ExperienceForm = ({
         type="text"
         placeholder="WebTech"
         value={company}
+        className={formSubmitted && !company ? "error" : ""}
         onChange={(e) => handleInputChange("company", e.target.value)}
       ></input>
       {/* Input field for start date */}
@@ -36,7 +38,7 @@ const ExperienceForm = ({
       <input
         id="startDate"
         type="date"
-        className="block"
+        className={formSubmitted && !startDate ? "error block" : "block"}
         value={startDate}
         onChange={(e) => handleInputChange("startDate", e.target.value)}
       ></input>
@@ -47,7 +49,7 @@ const ExperienceForm = ({
       <input
         id="endDate"
         type="date"
-        className="block"
+        className={formSubmitted && !endDate ? "error block" : "block"}
         value={endDate}
         onChange={(e) => handleInputChange("endDate", e.target.value)}
       ></input>
@@ -59,6 +61,7 @@ const ExperienceForm = ({
         id="role"
         type="text"
         placeholder="WebDev"
+        className={formSubmitted && !post ? "error" : ""}
         value={post}
         onChange={(e) => handleInputChange("post", e.target.value)}
       ></input>
@@ -68,6 +71,7 @@ const ExperienceForm = ({
       </label>
       <textarea
         defaultValue={description}
+        className={formSubmitted && !description ? "error" : ""}
         onChange={(e) => handleInputChange("description", e.target.value)}
         id="job-description"
         name="about-input"

@@ -124,3 +124,9 @@ input[type=submit]:hover {
     color: #c4c4c4;
     font-size: 12px;
 }
+
+input[type="text"].error,
+textarea.error,
+input[type="date"].error {
+    border-color: red;
+}
