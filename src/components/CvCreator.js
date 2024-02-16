@@ -1,21 +1,23 @@
 import { useState, useContext } from "react";
 import ExperienceForm from "./ExperienceFrom";
+import AboutForm from "./AboutForm";
+import EducationForm from "./EducationForm";
 import CvContext from "../utils/CvContext";
 
 const CvCreator = () => {
   // Define state variables to manage the list of experience forms and the length of the list
-  const [expLength, setExpLength] = useState(0);
-  const [experienceForms, setExperienceForms] = useState([]);
+  const [expLength, setExpLength] = useState(0); // State for the length of experienceForms
+  const [experienceForms, setExperienceForms] = useState([]); // State for experience forms
   const [aboutForm, setAboutForm] = useState([
-    { about: "", birthday: "", email: "", description: "" },
-  ]);
+    { name: "", birthday: "", email: "", description: "" },
+  ]); // State for about form
   const [educationForm, setEducationForm] = useState([
     { title: "", organisation: "" },
-  ]);
+  ]); // State for education form
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { setCvExperience, setCvAbout, setCvEducation } = useContext(CvContext);
 
-  console.log(educationForm.every((item) => item.title === ""));
+  // console.log(educationForm.every((item) => item.title === ""));
 
   // Function to add a new experience form to the list
   const addExperience = () => {
@@ -46,6 +48,14 @@ const CvCreator = () => {
     // Update the list of experience forms
     setExperienceForms(newExperienceForms);
   };
+  // Function to handle changes in input fields of the about form
+  const handleAboutChange = (field, value) => {
+    const newAboutForm = [...aboutForm];
+    // console.log(newAboutForm);
+    newAboutForm[0][field] = value;
+    setAboutForm(newAboutForm);
+    // console.log(aboutForm);
+  };
 
   // Function to handle changes in input fields of an experience form
   const handleExperienceChange = (index, field, value) => {
@@ -61,9 +71,15 @@ const CvCreator = () => {
     }
     setExperienceForms(newExperienceForms);
   };
-
-  const handleExperienceSubmit = () => {
-    // Check if all fields are filled
+  // Function to handle changes in input fields of the education form
+  const handleEducationForm = (field, value) => {
+    const newEducation = [...educationForm];
+    newEducation[0][field] = value;
+    setEducationForm(newEducation);
+    console.log(newEducation);
+  };
+  const handleFormSubmit = () => {
+    // Check if all fields are filled for each form
     const isExperienceFormValid = experienceForms.every(
       (form) =>
         form.company !== "" &&
@@ -85,8 +101,8 @@ const CvCreator = () => {
       (form) => form.title !== "" && form.organisation !== ""
     );
 
-    console.log("Educatie :" + !isEducationFormValid);
-
+    // console.log("Educatie :" + !isEducationFormValid);
+    // If any form is not valid, set formSubmitted to true
     if (!isExperienceFormValid || !isAboutFormValid || !isEducationFormValid) {
       // If the form is not valid, find which fields are empty
       // const emptyFields = experienceForms.map((form, index) => {
@@ -104,13 +120,16 @@ const CvCreator = () => {
       // You can also set state or display a message to the user about the empty fields
     } else {
       // If the form is valid, proceed with submitting the CV
-
-      setCvExperience(experienceForms);
-      setCvAbout(aboutForm);
-      setCvEducation(educationForm);
+      submitForms();
       console.log("submited");
     }
   };
+  // Function to submit forms
+  function submitForms() {
+    setCvExperience(experienceForms);
+    setCvAbout(aboutForm);
+    setCvEducation(educationForm);
+  }
 
   return (
     <section className="cv-creator">
@@ -120,30 +139,14 @@ const CvCreator = () => {
         <div className="about-form">
           <h3>About you</h3>
           {/* Input fields for personal information */}
-          <label htmlFor="fullname" className="info-form">
-            Your Fullname*
-          </label>
-          <input id="fullname" type="text" placeholder="Alex Drysdale"></input>
-          <label htmlFor="birthday" className="info-form">
-            Birthday*
-          </label>
-          <input id="birthday" type="date" className="block"></input>
-          <label htmlFor="email" className="info-form">
-            Your email*
-          </label>
-          <input
-            id="email"
-            type="text"
-            placeholder="alexdrysdale@gmail.com"
-          ></input>
-          <labe htmlFor="about" className="info-form">
-            Short or long description about you. Fell free to eat bullshit.*
-          </labe>
-          <textarea
-            id="about"
-            name="about-input"
-            placeholder="My name is Alex Drysdale and I am a junior web developer for Oswald Technologies. I am an accomplished coder and..."
-          ></textarea>
+          <AboutForm
+            name={aboutForm[0].name}
+            birthday={aboutForm[0].birthday}
+            email={aboutForm[0].email}
+            description={aboutForm[0].description}
+            onChange={(field, value) => handleAboutChange(field, value)}
+            formSubmitted={formSubmitted}
+          />
         </div>
         {/* Experience form */}
         <div className="experince-form">
@@ -170,31 +173,20 @@ const CvCreator = () => {
           <button className="primary-btn" onClick={addExperience}>
             Add Experience
           </button>
-          <label></label>
         </div>
         {/* Education form */}
         <div className="education-form">
           <h3>Your Education</h3>
-          <label htmlFor="qualification" className="info-form">
-            Title of qualification awarded*
-          </label>
-          <input
-            id="qualification"
-            type="text"
-            placeholder="Title of qualification awarded"
-          ></input>
-          <label htmlFor="Organisation" className="info-form">
-            Organisation providing education and training*
-          </label>
-          <input
-            id="Organisation"
-            type="text"
-            placeholder="Organisation"
-          ></input>
+          <EducationForm
+            title={educationForm[0].title}
+            organisation={educationForm[0].organisation}
+            onChange={(field, value) => handleEducationForm(field, value)}
+            formSubmitted={formSubmitted}
+          />
         </div>
       </div>
       {/* Button to submit the CV */}
-      <button className="primary-btn submit" onClick={handleExperienceSubmit}>
+      <button className="primary-btn submit" onClick={handleFormSubmit}>
         Submit CV
       </button>
     </section>

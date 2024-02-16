@@ -130,3 +130,13 @@ textarea.error,
 input[type="date"].error {
     border-color: red;
 }
+
+.cv-info_item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.cv-info_item:not(:last-child) {
+    margin-bottom: 20px;
+}
