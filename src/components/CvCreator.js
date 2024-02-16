@@ -14,7 +14,8 @@ const CvCreator = () => {
   const [educationForm, setEducationForm] = useState([
     { title: "", organisation: "" },
   ]); // State for education form
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false); // State for the form submited
+  const [emailValidation, setEmailValidation] = useState(false); // State for the email field validation
   const { setCvExperience, setCvAbout, setCvEducation } = useContext(CvContext);
 
   // console.log(educationForm.every((item) => item.title === ""));
@@ -50,9 +51,11 @@ const CvCreator = () => {
   };
   // Function to handle changes in input fields of the about form
   const handleAboutChange = (field, value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const newAboutForm = [...aboutForm];
     // console.log(newAboutForm);
     newAboutForm[0][field] = value;
+    setEmailValidation(emailRegex.test(newAboutForm[0].email));
     setAboutForm(newAboutForm);
     // console.log(aboutForm);
   };
@@ -76,7 +79,6 @@ const CvCreator = () => {
     const newEducation = [...educationForm];
     newEducation[0][field] = value;
     setEducationForm(newEducation);
-    console.log(newEducation);
   };
   const handleFormSubmit = () => {
     // Check if all fields are filled for each form
@@ -103,7 +105,12 @@ const CvCreator = () => {
 
     // console.log("Educatie :" + !isEducationFormValid);
     // If any form is not valid, set formSubmitted to true
-    if (!isExperienceFormValid || !isAboutFormValid || !isEducationFormValid) {
+    if (
+      !isExperienceFormValid ||
+      !isAboutFormValid ||
+      !isEducationFormValid ||
+      !emailValidation
+    ) {
       // If the form is not valid, find which fields are empty
       // const emptyFields = experienceForms.map((form, index) => {
       //   const emptyFieldsInForm = Object.keys(form).filter(
@@ -140,6 +147,7 @@ const CvCreator = () => {
           <h3>About you</h3>
           {/* Input fields for personal information */}
           <AboutForm
+            emailValidation={emailValidation}
             name={aboutForm[0].name}
             birthday={aboutForm[0].birthday}
             email={aboutForm[0].email}
