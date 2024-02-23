@@ -121,10 +121,6 @@ const CvCreator = () => {
 
       setFormSubmitted(true);
       console.log("not submite");
-
-      // Log or display the empty fields for debugging or user feedback
-      // console.log(emptyFields);
-      // You can also set state or display a message to the user about the empty fields
     } else {
       // If the form is valid, proceed with submitting the CV
       submitForms();
