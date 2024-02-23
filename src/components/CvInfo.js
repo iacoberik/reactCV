@@ -3,7 +3,7 @@ import CvContext from "../utils/CvContext";
 
 export default function CvInfo() {
   const { about, education, experience } = useContext(CvContext);
-  console.log(experience);
+
   return (
     <section className="cv-info">
       <h2 className="heading">Your CV Here</h2>

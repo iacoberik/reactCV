@@ -1,3 +1,5 @@
+import * as React from "react";
+
 const Footer = () => {
   return (
     <footer className=" bg-slate-100 shadow-md">
